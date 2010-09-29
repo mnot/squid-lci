@@ -229,8 +229,7 @@ How will caches that don't implement LCI behave?
   for example, when your clients may also be caching. Future protocol
   extensions may enable us to avoid this effect.
 
-My URIs have query terms that have several different equivalent forms. Will
-LCI work with them?
+My URIs have queries that have different equivalent forms. Will LCI work?
   If there is any change (e.g., in case, order of parameters, etc.) in the 
   URI of an event or cached response, the event will not be applied. For
   example, if clients access a resource as both
@@ -253,13 +252,13 @@ too much chatter on the network (as well as more possibility of loops, etc.).
 Thus...
 
 We send HTCP CLRs to the LCI manager when:
-1) we get a POST/PUT/DELETE/etc. from clients for a given URI
-2) we get a HTCP CLR for a peer.
+ 1) we get a POST/PUT/DELETE/etc. from clients for a given URI
+ 2) we get a HTCP CLR for a peer.
 but NOT when we get a PURGE.
 
 We send HTCP CLRs to peers when:
-1) we get a POST/PUT/DELETE/etc. from clients for a given URI
-2) we get a PURGE
+ 1) we get a POST/PUT/DELETE/etc. from clients for a given URI
+ 2) we get a PURGE
 but NOT when we get a HTCP CLR.
 
 This implies that regular peers should just be configured with 'htcp',
