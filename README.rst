@@ -43,7 +43,7 @@ it will change a number of things on your system, including the blog itself,
 entry counts, user posting metadata, and so forth. If you include a link to
 Bob's new-article resource in each of those responses::
 
-  Link: </users/bob/new-article>; rel="invalidated-by"
+  Link: </users/bob/new-article>; rel="inv-by"
 
 it will invalidate those things every time Bob posts a new blog article.
 
@@ -51,7 +51,7 @@ LCI can accommodate many such links, so that a single POST, PUT or DELETE can
 invalidate a few hundred cached responses. In some cases, you may want to
 further simplify things, by giving a "synthetic" URI to these responses::
 
-  Link: <http://fake.yahoo.com/placeholder/1>; rel="invalidated-by"
+  Link: <http://fake.yahoo.com/placeholder/1>; rel="inv-by"
 
 So that in a future POST, PUT or DELETE responses, you can invalidate things
 arbitrarily::
@@ -78,7 +78,7 @@ different URIs that could be in-cache::
 
 If you tell LCI that these are all related to the Nicole Kidman resource::
 
-  Link: </movie-stars/Nicole+Kidman>; rel="invalidated-by"
+  Link: </movie-stars/Nicole+Kidman>; rel="inv-by"
 
 then all of the cached search responses will be invalidated when you change
 Nicole's details::
@@ -241,7 +241,7 @@ Background on the Squid <-> LCI Manager Protocol
 ================================================
 
 The LCI Manager uses HTCP CLR to invalidate associated URLs (collected by
-observing the invalidated-by link relation), and HTTP PURGE to invalidate
+observing the inv-by link relation), and HTTP PURGE to invalidate
 those URLs that are directly made invalid by the invalidates link relation.
 
 This is because directly invalid URLs need to be communicated to peers, while

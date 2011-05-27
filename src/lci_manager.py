@@ -24,16 +24,16 @@ send HTTP PURGEs and HTCP CLRs to Squid.
 To avoid looping and unnecessary propagation of invalidations, LCI uses the
 available information channels in the folowing way:
 
-  * Squid logs are scanned for new "invalidated-by" link relations, which
+  * Squid logs are scanned for new "inv-by" link relations, which
     are kept in ManagerState.
   * Squid logs are scanned for new "invalidates" link relations (only on
     requests with unsafe methods); the Manager will invalidate them as well as
-    any associated URIs (as per "invalidated-by" link relations) in Squid.
+    any associated URIs (as per "inv-by" link relations) in Squid.
   * Incoming HTCP CLRs from Squid indicate requests (possibly local, possibly
     from peers) that invalidate a URI; the Manager will find associated
-    (as per "invalidated-by" link relations) URIs in state and invalidate them
+    (as per "inv-by" link relations) URIs in state and invalidate them
     in Squid.
-  * The LCI Manager invalidates associated URIs (i.e., with "invalidated-by")
+  * The LCI Manager invalidates associated URIs (i.e., with "inv-by")
     by sending HTTP PURGEs directly to Squid. Squid will NOT forward these
     invalidations to its peers.
   * The LCI Manager invalidates directly indicated URIs (i.e., those found
@@ -704,7 +704,7 @@ class SquidLogProtocol(LineReceiver):
                 self._parse_link(unquote(link_str))
             )
             if method in self.safe_methods \
-            and links.has_key('invalidated-by'):
+            and links.has_key('inv-by'):
                 # remember dependencies so we can act on them later
                 if age_str == '-':
                     age = 0
@@ -733,7 +733,7 @@ class SquidLogProtocol(LineReceiver):
                     self.gc_ttl_fudge, 
                     self.gc_ttl_min
                 )
-                self.mgr.set_groups(uri, links['invalidated-by'], ttl)
+                self.mgr.set_groups(uri, links['inv-by'], ttl)
             elif method not in self.safe_methods:
                 if links.has_key("invalidates"):
                     # this response says it invalidates something else
