@@ -700,6 +700,7 @@ class SquidLogProtocol(LineReceiver):
                 method, uri, link_str, age_str, cc_str = line.split(None, 4)
             except ValueError:
                 self.log.error("Misformatted squid log line received")
+                return
             links = self._extract_relations(
                 self._parse_link(unquote(link_str))
             )
